@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
      */
 
     State startState, goalState;
-    startState << 30, 30;
+    startState << 230, 230;
     goalState << width - 30, height - 30;
     Scenario scenario(width, height, circles, rects, goalState);
 
