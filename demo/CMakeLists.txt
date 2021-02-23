@@ -33,31 +33,6 @@ if (OPENMP_FOUND)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
 
-
-foreach (nn KDTreeBatch GNAT)
-    foreach (scalar float double)
-        foreach (mt 0 1)
-            if (mt)
-                set(mtname mt)
-            else()
-                set(mtname st)
-            endif()
-            
-            set(trgt nao_cup_planning-${nn}-${scalar}-${mtname})
-            add_executable(${trgt} nao_cup_planning.cpp)
-            target_compile_definitions(${trgt} PRIVATE NN_TYPE=${nn} SCALAR_TYPE=${scalar} MT=1)
-            target_link_libraries(${trgt} Eigen3::Eigen)
-
-            set(trgt se3_rigid_body_planning-${nn}-${scalar}-${mtname})
-            add_executable(${trgt} se3_rigid_body_planning.cpp)
-            target_compile_definitions(${trgt} PRIVATE NN_TYPE=${nn} SCALAR_TYPE=${scalar} MT=1)
-            target_link_libraries(${trgt} Eigen3::Eigen ${ASSIMP_LIBRARIES} ${FCL_LIBRARIES} ${CCD_LIBRARIES})
-
-	endforeach(mt)
-    endforeach(scalar)
-endforeach(nn)
-
-
 set(trgt holonomic_2d_point_planning)
 add_executable(${trgt} holonomic_2d_point_planning.cpp)
 target_link_libraries(${trgt} Eigen3::Eigen)
